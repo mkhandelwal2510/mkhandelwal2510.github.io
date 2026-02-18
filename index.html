@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Test Page</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    pre { background: #f4f4f4; padding: 15px; }
+  </style>
+</head>
+<body>
+
+<h2>CORS Test Page</h2>
+<button onclick="getSecret()">Fetch Sensitive Data</button>
+
+<h3>Response:</h3>
+<pre id="output">Waiting...</pre>
+
+<script>
+function getSecret() {
+  fetch("http://localhost:8000/api/secret", {
+    method: "GET",
+    credentials: "include" // sends cookies
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("output").innerText = data;
+    console.log("Response:", data);
+  })
+  .catch(err => {
+    document.getElementById("output").innerText = "Blocked by CORS";
+    console.error("Error:", err);
+  });
+}
+</script>
+
+</body>
+</html>
